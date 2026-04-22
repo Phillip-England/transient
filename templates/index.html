@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>transient</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <main class="shell">
+        <section class="hero">
+            <p class="eyebrow">transient</p>
+            <h1>Upload audio, push the stress, export sliced hits.</h1>
+            <p class="lede">
+                This tool analyzes short volume windows against the file average, finds transient-heavy moments,
+                and renders a ZIP full of slices with FFmpeg.
+            </p>
+        </section>
+
+        <section class="panel">
+            <form action="/process" method="post" enctype="multipart/form-data" class="form">
+                <label class="field">
+                    <span>Audio file</span>
+                    <input type="file" name="audio_file" accept="audio/*" required>
+                </label>
+
+                <label class="field">
+                    <span>Stress factor</span>
+                    <div class="stress-row">
+                        <input
+                            id="stress"
+                            type="range"
+                            name="stress"
+                            min="0"
+                            max="100"
+                            value="{{ defaults.stress }}"
+                            oninput="stressValue.textContent = this.value"
+                        >
+                        <output id="stressValue">{{ defaults.stress }}</output>
+                    </div>
+                    <small>Lower values keep broader slices. Higher values isolate louder, sharper transients.</small>
+                </label>
+
+                <button type="submit">Process And Download ZIP</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
